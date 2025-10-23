@@ -18,7 +18,26 @@ export default function Header() {
     <header className="relative flex items-center justify-between px-6 py-4 bg-white shadow-md z-50">
       {/* Logo + name */}
       <Link href="/" className="flex items-center gap-3 cursor-pointer">
-        <div className="w-10 h-10 bg-gray-300 rounded-full" />
+        {/* Thin Green Infinity Symbol */}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 100 50"
+          className="w-10 h-10 text-[#2F855A]" // your green accent
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={4}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path
+            d="M10,25
+             C10,5 40,5 50,25
+             C60,45 90,45 90,25
+             C90,5 60,5 50,25
+             C40,45 10,45 10,25 Z"
+          />
+        </svg>
+
         <span className="font-bold text-lg md:text-xl">Infinite Loops</span>
       </Link>
 
@@ -37,8 +56,6 @@ export default function Header() {
 
       {/* Right Side: Search, Cart, Menu */}
       <div className="flex items-center gap-3">
-
-
         {/* Cart */}
         <Button asChild variant="ghost" className="p-2 rounded-full relative">
           <Link href="/cart" className="relative">

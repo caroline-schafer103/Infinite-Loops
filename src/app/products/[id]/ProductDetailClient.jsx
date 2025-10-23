@@ -45,11 +45,24 @@ export default function ProductDetailClient({ product }) {
   const { addToCart } = useCart();
 
   const handleAddToCart = () => {
-    if (!variant || variant.inventory <= 0) {
+    let variantToAdd = variant;
+
+    // If no variant selected, default to the first *available* one
+    if (!variantToAdd && product.variants?.length > 0) {
+      const firstAvailable = product.variants.find((v) => v.inventory > 0);
+      if (firstAvailable) {
+        variantToAdd = firstAvailable;
+        setSelectedVariant(firstAvailable.id);
+      }
+    }
+
+    // Handle if no variant or out of stock
+    if (!variantToAdd || variantToAdd.inventory <= 0) {
       toast.error("This variant is out of stock.");
       return;
     }
-    addToCart(product, selectedVariant, quantity);
+
+    addToCart(product, variantToAdd.id, quantity);
     toast.success(`${product.name} added to cart!`, {
       description: `Quantity: ${quantity}`,
     });
@@ -189,22 +202,23 @@ export default function ProductDetailClient({ product }) {
             {dropdownOpen && (
               <ul className="absolute z-10 mt-1 w-full max-h-32 overflow-y-auto bg-white border border-gray-300 rounded shadow-lg">
                 {variant && variant.inventory > 0 ? (
-                  Array.from({ length: variant.inventory }, (_, i) => i + 1).map(
-                    (num) => (
-                      <li
-                        key={num}
-                        onClick={() => {
-                          setQuantity(num);
-                          setDropdownOpen(false);
-                        }}
-                        className={`px-3 py-1 hover:bg-green-100 cursor-pointer ${
-                          num === quantity ? "bg-green-50 font-medium" : ""
-                        }`}
-                      >
-                        {num}
-                      </li>
-                    )
-                  )
+                  Array.from(
+                    { length: variant.inventory },
+                    (_, i) => i + 1
+                  ).map((num) => (
+                    <li
+                      key={num}
+                      onClick={() => {
+                        setQuantity(num);
+                        setDropdownOpen(false);
+                      }}
+                      className={`px-3 py-1 hover:bg-green-100 cursor-pointer ${
+                        num === quantity ? "bg-green-50 font-medium" : ""
+                      }`}
+                    >
+                      {num}
+                    </li>
+                  ))
                 ) : (
                   <li className="px-3 py-1 text-gray-500">0</li>
                 )}
