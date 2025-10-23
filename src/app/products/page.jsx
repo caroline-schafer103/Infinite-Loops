@@ -1,16 +1,20 @@
 import Link from "next/link";
 
-async function getProducts() {
-  const res = await fetch(
-    `/api/products`,
-    { cache: "no-store" }
-  );
-  if (!res.ok) throw new Error("Failed to fetch products");
-  return res.json();
-}
-
 function toKebabCase(str) {
   return str.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
+}
+
+async function getProducts() {
+  // Determine the base URL dynamically
+  const baseUrl =
+    process.env.NEXT_PUBLIC_BASE_URL ||
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
+
+  const res = await fetch(`${baseUrl}/api/products`, { cache: "no-store" });
+
+  if (!res.ok) throw new Error("Failed to fetch products");
+
+  return res.json();
 }
 
 export default async function ProductsPage() {
@@ -51,7 +55,7 @@ export default async function ProductsPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {items.map((p) => {
-              // ✅ Prefer product image, fall back to first variant image
+              // Prefer product image, fall back to first variant image
               const productImage =
                 p.images?.[0] ||
                 p.variants?.[0]?.images?.[0] ||

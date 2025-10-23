@@ -2,14 +2,19 @@ import { notFound } from "next/navigation";
 import ProductDetailClient from "./ProductDetailClient";
 
 async function getProduct(id) {
-  // Use a relative path so it works in both local + production environments
-  const res = await fetch(`/api/products?id=${id}`, { cache: "no-store" });
+  const baseUrl =
+    process.env.NEXT_PUBLIC_BASE_URL ||
+    process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : "http://localhost:3000";
+
+  const res = await fetch(`${baseUrl}/api/products?id=${id}`, {
+    cache: "no-store",
+  });
 
   if (!res.ok) throw new Error("Failed to fetch product");
 
   const products = await res.json();
-
-  // If the API returns an array, return the first product
   return Array.isArray(products) ? products[0] : products;
 }
 
