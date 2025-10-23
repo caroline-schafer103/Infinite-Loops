@@ -2,7 +2,7 @@ import Link from "next/link";
 
 async function getProducts() {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api/products`,
+    `/api/products`,
     { cache: "no-store" }
   );
   if (!res.ok) throw new Error("Failed to fetch products");

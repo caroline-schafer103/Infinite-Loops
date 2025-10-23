@@ -2,22 +2,20 @@ import { notFound } from "next/navigation";
 import ProductDetailClient from "./ProductDetailClient";
 
 async function getProduct(id) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api/products?id=${id}`, {
-    cache: "no-store",
-  });
+  // Use a relative path so it works in both local + production environments
+  const res = await fetch(`/api/products?id=${id}`, { cache: "no-store" });
+
   if (!res.ok) throw new Error("Failed to fetch product");
+
   const products = await res.json();
 
-  // If the API returns a list, pick the first (matching) product
+  // If the API returns an array, return the first product
   return Array.isArray(products) ? products[0] : products;
 }
 
-
 export default async function ProductPage({ params }) {
-  const { id } = params; 
+  const { id } = params;
   const product = await getProduct(id);
-  console.log("Fetched product:", product);
-
 
   if (!product) return notFound();
 
