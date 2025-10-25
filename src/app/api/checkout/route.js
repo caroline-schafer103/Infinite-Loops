@@ -1,12 +1,7 @@
 import Stripe from "stripe";
 import { NextResponse } from "next/server";
 
-// ⚠️ Hardcoded test key — OK for local testing only
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-
-if (!process.env.STRIPE_SECRET_KEY) {
-  throw new Error("Missing STRIPE_SECRET_KEY in environment variables");
-}
 
 export async function POST(request) {
   try {
@@ -59,20 +54,20 @@ export async function POST(request) {
       payment_method_types: ["card"],
       mode: "payment",
       line_items: lineItems,
-      // shipping_address_collection: { allowed_countries: ["US", "CA"] },
-      // shipping_options: [
-      //   {
-      //     shipping_rate_data: {
-      //       type: "fixed_amount",
-      //       fixed_amount: { amount: 500, currency: "usd" },
-      //       display_name: "Standard shipping",
-      //       delivery_estimate: {
-      //         minimum: { unit: "business_day", value: 3 },
-      //         maximum: { unit: "business_day", value: 5 },
-      //       },
-      //     },
-      //   },
-      // ],
+      shipping_address_collection: { allowed_countries: ["US", "CA"] },
+      shipping_options: [
+        {
+          shipping_rate_data: {
+            type: "fixed_amount",
+            fixed_amount: { amount: 1, currency: "usd" },
+            display_name: "Standard shipping",
+            delivery_estimate: {
+              minimum: { unit: "business_day", value: 3 },
+              maximum: { unit: "business_day", value: 5 },
+            },
+          },
+        },
+      ],
       metadata,
       success_url: `${request.headers.get(
         "origin"
