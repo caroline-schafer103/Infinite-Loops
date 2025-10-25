@@ -2,6 +2,7 @@
 import connectDB from "../lib/mongodb.js";
 import Product from "../models/Product.js";
 
+
 // Example: array of products
 // You can copy/paste this structure and add as many products as you like
 const products = [
@@ -18,7 +19,7 @@ const products = [
       {
         id: "coaster-apple",
         name: "Apple",
-        color: ["#90EE90", "#FF0000"],
+        color: ["#a93341", "#ad9e43"],
         inventory: 4,
         images: [
           "https://res.cloudinary.com/djvweczd8/image/upload/v1761100726/CaroCrochet-105_ol9vpp.jpg",
@@ -28,7 +29,7 @@ const products = [
       {
         id: "coaster-green-white-gradient",
         name: "Green & White Gradient",
-        color: ["#008000", "#FFFFFF"],
+        color: ["#b5ba86", "#FFFFFF"],
         inventory: 4,
         images: [
           "https://res.cloudinary.com/djvweczd8/image/upload/v1761100739/CaroCrochet-096_p0aope.jpg",
@@ -38,7 +39,7 @@ const products = [
       {
         id: "coaster-purple-white",
         name: "Purple & White",
-        color: ["#ab9dd8", "#FFFFFF"],
+        color: ["#bcaddf", "#FFFFFF"],
         inventory: 3,
         images: [
           "https://res.cloudinary.com/djvweczd8/image/upload/v1761100727/CaroCrochet-102_knvneb.jpg",
@@ -58,7 +59,7 @@ const products = [
       {
         id: "coaster-pink-yellow",
         name: "Pink & Yellow",
-        color: ["#f5a09f5", "#ffe6b5"],
+        color: ["#ffb6b0", "#feeabc"],
         inventory: 1,
         images: [
           "https://res.cloudinary.com/djvweczd8/image/upload/v1761100741/CaroCrochet-092_fcwnx2.jpg",

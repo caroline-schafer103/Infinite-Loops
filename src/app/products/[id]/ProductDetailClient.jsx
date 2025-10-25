@@ -75,7 +75,13 @@ export default function ProductDetailClient({ product }) {
       {/* Left: Images */}
       <div className="flex gap-4">
         {/* Thumbnails */}
-        <div className="flex flex-col gap-2">
+        <div
+          className="flex flex-col gap-2 overflow-y-auto"
+          style={{
+            maxHeight: "24rem", // matches main image height (h-96 = 24rem)
+            scrollbarWidth: "thin",
+          }}
+        >
           {thumbnails.map((img, index) => (
             <img
               key={index}

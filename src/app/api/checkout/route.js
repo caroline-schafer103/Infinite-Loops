@@ -15,30 +15,30 @@ export async function POST(request) {
     }
 
     // Create Stripe line items
-    // const lineItems = body.items.map((item) => ({
-    //   price_data: {
-    //     currency: "usd",
-    //     product_data: {
-    //       name: item.name,
-    //     },
-    //     unit_amount: Math.round(item.price * 100),
-    //   },
-    //   quantity: item.quantity,
-    // }));
+    const lineItems = body.items.map((item) => ({
+      price_data: {
+        currency: "usd",
+        product_data: {
+          name: item.name,
+        },
+        unit_amount: Math.round(item.price * 100),
+      },
+      quantity: item.quantity,
+    }));
 
     // Create Stripe line items (for testing, charge only $0.50 total)
-    const lineItems = [
-      {
-        price_data: {
-          currency: "usd",
-          product_data: {
-            name: "Test Item",
-          },
-          unit_amount: 50, // 50¢ — Stripe requires minimum 50 cents
-        },
-        quantity: 1,
-      },
-    ];
+    // const lineItems = [
+    //   {
+    //     price_data: {
+    //       currency: "usd",
+    //       product_data: {
+    //         name: "Test Item",
+    //       },
+    //       unit_amount: 50, // 50¢ — Stripe requires minimum 50 cents
+    //     },
+    //     quantity: 1,
+    //   },
+    // ];
 
     // Compact metadata (for webhook inventory tracking)
     const metadata = {
@@ -59,7 +59,7 @@ export async function POST(request) {
         {
           shipping_rate_data: {
             type: "fixed_amount",
-            fixed_amount: { amount: 1, currency: "usd" },
+            fixed_amount: { amount: 450, currency: "usd" },
             display_name: "Standard shipping",
             delivery_estimate: {
               minimum: { unit: "business_day", value: 3 },
